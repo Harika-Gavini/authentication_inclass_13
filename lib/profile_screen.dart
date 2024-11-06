@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
             Text("Email: ${_authService.currentUser?.email}"),
             ElevatedButton(
               onPressed: () async {
-                // Change password logic
+                // Change password logic (to be implemented)
               },
               child: Text("Change Password"),
             ),

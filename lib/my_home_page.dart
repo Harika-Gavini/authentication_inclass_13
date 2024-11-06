@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'auth_service.dart';
+import 'profile_screen.dart';  // ProfileScreen import
 
 class MyHomePage extends StatefulWidget {
   final String title;
@@ -14,15 +15,29 @@ class _MyHomePageState extends State<MyHomePage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  void _register() async {
-    await _authService.register(
+  // Sign-in logic
+  void _signIn() async {
+    var user = await _authService.signIn(
       _emailController.text.trim(),
       _passwordController.text.trim(),
     );
+    if (user != null) {
+      // Navigate to ProfileScreen upon successful sign-in
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfileScreen()),
+      );
+    } else {
+      // Show error if sign-in fails
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Sign-in failed. Please try again.")),
+      );
+    }
   }
 
-  void _signIn() async {
-    await _authService.signIn(
+  // Register logic
+  void _register() async {
+    await _authService.register(
       _emailController.text.trim(),
       _passwordController.text.trim(),
     );
@@ -36,10 +51,23 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(controller: _emailController, decoration: InputDecoration(labelText: 'Email')),
-            TextField(controller: _passwordController, decoration: InputDecoration(labelText: 'Password'), obscureText: true),
-            ElevatedButton(onPressed: _register, child: Text('Register')),
-            ElevatedButton(onPressed: _signIn, child: Text('Sign In')),
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
+            ElevatedButton(
+              onPressed: _register,
+              child: Text('Register'),
+            ),
+            ElevatedButton(
+              onPressed: _signIn,
+              child: Text('Sign In'),
+            ),
           ],
         ),
       ),
