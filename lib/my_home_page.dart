@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'auth_service.dart';
-import 'profile_screen.dart';  // ProfileScreen import
+import 'profile_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;
@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     if (user != null) {
       // Navigate to ProfileScreen upon successful sign-in
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => ProfileScreen()),
       );
@@ -37,10 +37,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // Register logic
   void _register() async {
-    await _authService.register(
+    var user = await _authService.register(
       _emailController.text.trim(),
       _passwordController.text.trim(),
     );
+    if (user != null) {
+      // Navigate to ProfileScreen upon successful registration
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ProfileScreen()),
+      );
+    } else {
+      // Show error if registration fails
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Registration failed. Please try again.")),
+      );
+    }
   }
 
   @override

@@ -12,10 +12,10 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Email: ${_authService.currentUser?.email}"),
+            Text("Email: ${_authService.currentUser?.email ?? "Not Signed In"}"),
             ElevatedButton(
               onPressed: () async {
-                // Change password logic (to be implemented)
+                // Change password logic (you can implement it later)
               },
               child: Text("Change Password"),
             ),
