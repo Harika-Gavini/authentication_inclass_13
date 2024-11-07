@@ -1,3 +1,5 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -15,7 +17,7 @@ class AuthService {
       );
       return userCredential.user;
     } catch (e) {
-      print(e); // Handle error (you can show an error message here)
+      print('Error during sign-in: $e');
       return null;
     }
   }
@@ -29,7 +31,7 @@ class AuthService {
       );
       return userCredential.user;
     } catch (e) {
-      print(e); // Handle error (you can show an error message here)
+      print('Error during registration: $e');
       return null;
     }
   }
